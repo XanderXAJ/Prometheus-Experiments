@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+  external_labels:
+    monitor: "codelab-monitor"
+
+rule_files:
+  - prometheus.rules.yml
+
+scrape_configs:
+  - job_name: prometheus
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+          - localhost:9090
+  - job_name: node
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+          - node1:9100
+          - node2:9100
+        labels:
+          group: production
+      - targets:
+          - node3:9100
+        labels:
+          group: canary
